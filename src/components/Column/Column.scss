@@ -1,17 +1,18 @@
 @import "../../setting.scss";
+
+$column-height: calc(#{$boardContent-height} - #{$gap * 3});
 .column {
   margin: 0 $gap;
   //background-color: $board-columns-bg-color;
-  flex: 0 0 auto;
+  //flex: 0 0 auto;
   width: 300px;
-  height: calc(100% - #{$gap});
-  // height: auto;
-  overflow-y: auto;
+  height: $column-height;
+  //overflow-y: auto;
   > * {
     background-color: $board-columns-bg-color;
     padding: 0 $gap;
   }
-  header {
+  header.column-drag-handle {
     padding-left: 15px;
     height: $header-height;
     line-height: 36px;
@@ -19,6 +20,7 @@
     font-weight: bold;
     border-top-left-radius: $radius;
     border-top-right-radius: $radius;
+    cursor: pointer;
   }
   footer {
     padding-left: 15px;
@@ -28,25 +30,54 @@
     border-bottom-left-radius: $radius;
     border-bottom-right-radius: $radius;
   }
-  ul {
-    max-height: calc(
-      100% - #{$header-height} - #{$footer-height} - #{$gap * 2}
-    );
+  .tasks {
+    max-height: calc(#{$column-height} - #{$header-height * 2});
+    //max-width: calc(100% - #{$gap * 2});
     margin: 0;
     padding: $gap;
     overflow-y: auto;
-    overflow-y: scroll;
-    li {
-      width: calc(100% - #{$gap * 2} - 16px);
-      margin: 0 #{$gap};
-      background-color: #fff;
-      padding: 8px;
-      border-radius: $radius;
-      box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.5);
-
-      &:not(:last-child) {
-        margin-bottom: $gap;
+    //overflow-y: scroll;
+    cursor: pointer;
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+    }
+    &:hover {
+      &::-webkit-scrollbar:vertical {
+        width: 10px;
       }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: $radius;
+        background-color: $scoll-bg-color;
+      }
+    }
+
+    // li {
+    //   width: calc(100% - #{$gap * 2} - 16px);
+    //   margin: 0 #{$gap};
+    //   background-color: #fff;
+    //   padding: 8px;
+    //   border-radius: $radius;
+    //   box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.5);
+
+    //   &:not(:last-child) {
+    //     margin-bottom: $gap;
+    //   }
+    // }
+    .card-ghost {
+      transition: transform 0.18s ease;
+      transform: rotateZ(5deg);
+    }
+
+    .card-ghost-drop {
+      transition: transform 0.18s ease-in-out;
+      transform: rotateZ(0deg);
+    }
+
+    .drop-preview {
+      background-color: rgba(150, 150, 200, 0.1);
+      border: 1px dashed #abc;
+      margin: 5px;
     }
   }
 }

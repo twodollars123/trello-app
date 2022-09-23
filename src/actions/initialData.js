@@ -31,7 +31,8 @@ export const initialData = {
               boardId: "board-1",
               columnId: "column-1",
               title: "Title of task 2",
-              cover: null,
+              cover:
+                "https://images.unsplash.com/photo-1663335468790-cf7e8a1e0e73?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1121&q=80",
             },
             {
               id: "task-3",

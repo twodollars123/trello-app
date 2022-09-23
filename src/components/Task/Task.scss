@@ -1,13 +1,13 @@
 @import "../../setting.scss";
 
-li {
-  width: calc(100% - #{$gap * 2} - 16px);
+.row-drag-handle {
+  //max-width: calc(100% - #{$gap * 2} -10px);
   margin: 0 #{$gap};
   background-color: #fff;
   padding: 8px;
   border-radius: $radius;
   box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.5);
-
+  margin-bottom: $gap;
   &:not(:last-child) {
     margin-bottom: $gap;
   }

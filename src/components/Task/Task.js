@@ -3,10 +3,16 @@ import "./Task.scss";
 function Task(props) {
   const { task } = props;
   return (
-    <li>
-      {task.cover && <img src={task.cover} alt="abc" />}
+    <div className="row-drag-handle">
+      {task.cover && (
+        <img
+          src={task.cover}
+          alt="abc"
+          onMouseDown={(e) => e.preventDefault()}
+        />
+      )}
       Title: {task.title}
-    </li>
+    </div>
   );
 }
 
