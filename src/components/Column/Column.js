@@ -5,11 +5,11 @@ import "./Column.scss";
 import { Container, Draggable } from "react-smooth-dnd";
 
 function Column(props) {
-  const { column } = props;
+  const { column, onRowDrop } = props;
   const tasks = mapOrder(column.tasks, column.taskOrder, "id");
 
   //dnd
-  const onRowDrop = (dropResult) => {};
+
   return (
     <div className="column">
       <header className="column-drag-handle">{column.title}</header>
@@ -18,7 +18,7 @@ function Column(props) {
         <Container
           groupName="row"
           getChildPayload={(index) => tasks[index]}
-          onDrop={onRowDrop}
+          onDrop={(dropResult) => onRowDrop(column.id, dropResult)}
           dragClass="card-ghost"
           dropClass="card-ghost-drog"
           dropPlaceholder={{
