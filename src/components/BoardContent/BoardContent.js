@@ -7,6 +7,13 @@ import "./BoardContent.scss";
 import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
 import { Container, Draggable } from "react-smooth-dnd";
+import {
+  Container as BootstrapContainer,
+  Row,
+  Col,
+  Form,
+  Button,
+} from "react-bootstrap";
 
 function BoardContent() {
   const [board, setBoard] = useState({});
@@ -67,6 +74,27 @@ function BoardContent() {
           </Draggable>
         ))}
       </Container>
+      <BootstrapContainer className="bootstrap-container">
+        <Row>
+          <Col className="add-new-column">
+            <i className="fa fa-plus icon" />
+            Add another card
+          </Col>
+        </Row>
+        <Row>
+          <Col className="enter-new-column">
+            <Form.Control
+              size="sm"
+              type="text"
+              placeholder="Enter a new column"
+            />
+            <Button variant="success" size="sm" className="btn-add-column">
+              Add
+            </Button>
+            <i className="fa fa-close icon" />
+          </Col>
+        </Row>
+      </BootstrapContainer>
     </div>
   );
 }

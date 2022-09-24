@@ -35,7 +35,12 @@ function Column(props) {
         </Container>
       </div>
 
-      <footer>Add another card</footer>
+      <footer>
+        <div className="footer-actions">
+          <i className="fa fa-plus icon" />
+          Add another card
+        </div>
+      </footer>
     </div>
   );
 }

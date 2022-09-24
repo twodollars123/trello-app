@@ -1,12 +1,64 @@
 @import "../../setting.scss";
 .board-columns {
   height: $boardContent-height;
-  //display: flex;
+  display: flex;
   overflow-x: auto;
   overflow-y: hidden;
+  &::after {
+    content: "";
+    flex: 0 0 $gap;
+  }
   .cards-drop-preview {
     background-color: rgba(150, 150, 200, 0.1);
     border: 1px dashed #abc;
     margin: 5px 45px 5px 5px;
+  }
+  .add-new-column {
+    width: 250px;
+    max-width: 250px;
+    // height: 32px;
+    line-height: 32px;
+    padding: 4px 0 4px 15px;
+    cursor: pointer;
+    margin-left: $gap;
+    color: white;
+    background-color: hsla(0, 0%, 100%, 0.24);
+    border-radius: $radius;
+    transition: 0.25s;
+    &:hover {
+      color: $main-text-color;
+    }
+    &:active {
+      background-color: hsla(0, 0%, 100%, 0.6);
+      color: $main-text-color;
+      box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.5);
+    }
+  }
+  .bootstrap-container {
+  }
+
+  .enter-new-column {
+    width: 250px;
+    max-width: 250px;
+    line-height: 32px;
+    padding: 4px 8px;
+    margin-left: $gap;
+    background-color: $board-columns-bg-color;
+    border-radius: $radius;
+    transition: 0.25s;
+    input {
+      outline: none;
+      border: none;
+    }
+    i {
+      font-size: 20px;
+      margin: 10px;
+      color: $do;
+      cursor: pointer;
+      padding: 4px;
+      &:hover {
+        color: darken($do, 10);
+      }
+    }
   }
 }
