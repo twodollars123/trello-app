@@ -1,6 +1,7 @@
 import Task from "../Task/Task";
 import { mapOrder } from "../../utilities/sorts";
 import "./Column.scss";
+import ActionsColumn from "../ActionsColumn/ActionsColumn";
 
 import { Container, Draggable } from "react-smooth-dnd";
 
@@ -8,11 +9,14 @@ function Column(props) {
   const { column, onRowDrop } = props;
   const tasks = mapOrder(column.tasks, column.taskOrder, "id");
 
-  //dnd
-
   return (
     <div className="column">
-      <header className="column-drag-handle">{column.title}</header>
+      <header className="column-drag-handle">
+        <div className="title-column">{column.title}</div>
+        <div className="action-header-column">
+          <ActionsColumn />
+        </div>
+      </header>
 
       <div className="tasks">
         <Container
