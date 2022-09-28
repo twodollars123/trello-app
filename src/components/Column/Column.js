@@ -3,6 +3,9 @@ import { mapOrder } from "../../utilities/sorts";
 import "./Column.scss";
 import ActionsColumn from "../ActionsColumn/ActionsColumn";
 
+import "react-toastify/dist/ReactToastify.css";
+// import Modal from "../Common/Modal";
+
 import { Container, Draggable } from "react-smooth-dnd";
 
 function Column(props) {
