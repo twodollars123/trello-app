@@ -7,15 +7,77 @@ import "react-toastify/dist/ReactToastify.css";
 // import Modal from "../Common/Modal";
 
 import { Container, Draggable } from "react-smooth-dnd";
+import { useState, useEffect } from "react";
 
 function Column(props) {
-  const { column, onRowDrop } = props;
+  const { column, onRowDrop, onColumnUpdate } = props;
   const tasks = mapOrder(column.tasks, column.taskOrder, "id");
+
+  //const [showInputEdit, setShowInputEdti] = useState(false);
+
+  //const changeTitleColumnRef = useRef();
+  const [changeValueTitleColumn, setChangeValueTitleColumn] = useState("");
+
+  const handleChangeValueTitleColumn = (e) => {
+    setChangeValueTitleColumn(e.target.value.trim());
+  };
+
+  useEffect(() => {
+    setChangeValueTitleColumn(column.title);
+  }, [column.title]);
+
+  // const handleShowInputEdit = (e) => {
+  //   //setShowInputEdti(!showInputEdit);
+  //   // e.target.focus();
+  //   // e.target.select();
+  // };
+
+  const selectInlineInput = (e) => {
+    e.target.focus();
+    e.target.select();
+  };
+
+  // const handleChangeDataTitleColumn = () => {
+  //   let newColumns = [...column];
+  //   console.log("ref", changeTitleColumnRef);
+  //   console.log("data", changeValueTitleColumn);
+  //   handleShowInputEdit();
+  // };
+
+  const saveValue = (e) => {
+    e.target.blur();
+    let newColumn = {
+      ...column,
+      title: changeValueTitleColumn,
+    };
+
+    onColumnUpdate(newColumn);
+  };
 
   return (
     <div className="column">
       <header className="column-drag-handle">
-        <div className="title-column">{column.title}</div>
+        {/* {!showInputEdit ? (
+          <div className="title-column" onDoubleClick={handleShowInputEdit}>
+            {column.title}
+          </div>
+        ) : ( */}
+        <div className="edit-title-column">
+          <input
+            type="text"
+            value={changeValueTitleColumn}
+            className="input-edit-title-column"
+            onClick={selectInlineInput}
+            //ref={changeTitleColumnRef}
+            onChange={handleChangeValueTitleColumn}
+            onKeyDown={(e) => e.key === "Enter" && saveValue(e)}
+            //onBlur={handleChangeDataTitleColumn}
+            onMouseDown={(e) => {
+              e.preventDefault();
+            }}
+          />
+        </div>
+        {/* )} */}
         <div className="action-header-column">
           <ActionsColumn />
         </div>
