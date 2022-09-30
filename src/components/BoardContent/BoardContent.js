@@ -50,6 +50,7 @@ function BoardContent() {
   const tongleAddColumnForm = () => {
     setOpenAddColumnForm(!openAddColumnForm);
   };
+
   const handleChangeAddTitleColumn = (e) => {
     setTitleColumn(e.target.value.trim());
   };
@@ -96,6 +97,21 @@ function BoardContent() {
       setColumns(newColumns);
     }
   };
+
+  const onColumnUpdate = (newcolumn) => {
+    const newColumnId = newcolumn.id;
+    let newColumns = [...columns];
+    const newColumnIndex = newColumns.findIndex((i) => i.id === newColumnId);
+    if (newcolumn._destroy) {
+    } else {
+      newColumns.splice(newColumnIndex, 1, newcolumn);
+    }
+    let newBoard = { ...board };
+    newBoard.columnOrder = newColumns.map((column) => column.id);
+    newBoard.columns = newColumns;
+    setColumns(newColumns);
+    setBoard(newBoard);
+  };
   return (
     <div className="board-columns">
       <Container
@@ -111,7 +127,11 @@ function BoardContent() {
       >
         {columns.map((column, index) => (
           <Draggable key={index}>
-            <Column column={column} onRowDrop={onRowDrop} />
+            <Column
+              column={column}
+              onRowDrop={onRowDrop}
+              onColumnUpdate={onColumnUpdate}
+            />
           </Draggable>
         ))}
       </Container>
