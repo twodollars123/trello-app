@@ -19,4 +19,21 @@
     border: none;
     // padding: 4px;
   }
+  .bottom-task {
+    display: flex;
+    justify-content: space-between;
+    .priority-low {
+      color: $low;
+
+      text-shadow: 0 1px 3px rgba($low, 0.5);
+    }
+    .priority-medium {
+      color: $medium;
+      text-shadow: 0 1px 3px rgba($medium, 0.5);
+    }
+    .priority-high {
+      color: $high;
+      text-shadow: 0 1px 3px rgba($high, 0.5);
+    }
+  }
 }

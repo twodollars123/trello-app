@@ -15,7 +15,7 @@ import {
   Button,
 } from "react-bootstrap";
 
-function BoardContent() {
+function BoardContent(props) {
   const [board, setBoard] = useState({});
   const [columns, setColumns] = useState([]);
   const [openAddColumnForm, setOpenAddColumnForm] = useState(false);
@@ -112,6 +112,12 @@ function BoardContent() {
     setColumns(newColumns);
     setBoard(newBoard);
   };
+
+  // const onHandleAddNewTask = (newTask) => {
+  //   console.log(newTask);
+  //   let newTaskId = newTask.id;
+  //   columns.find()
+  // };
   return (
     <div className="board-columns">
       <Container
@@ -131,6 +137,10 @@ function BoardContent() {
               column={column}
               onRowDrop={onRowDrop}
               onColumnUpdate={onColumnUpdate}
+              visible={props.visible}
+              setVisible={props.setVisible}
+              // onHandleAddNewTask={onHandleAddNewTask}
+              // handleAddNewTask={handleAddNewTask}
             />
           </Draggable>
         ))}

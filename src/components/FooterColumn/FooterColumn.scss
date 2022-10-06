@@ -1,0 +1,8 @@
+@import "../../setting.scss";
+.footer-actions {
+  margin-left: $gap;
+  cursor: pointer;
+  &:hover {
+    color: $main-text-color;
+  }
+}

@@ -63,13 +63,6 @@ $column-height: calc(#{$boardContent-height} - #{$gap * 3});
     border-bottom-left-radius: $radius;
     border-bottom-right-radius: $radius;
     color: #888;
-    .footer-actions {
-      margin-left: $gap;
-      cursor: pointer;
-      &:hover {
-        color: $main-text-color;
-      }
-    }
   }
   .tasks {
     max-height: calc(#{$column-height} - #{$header-height * 2});
