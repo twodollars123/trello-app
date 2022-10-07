@@ -9,21 +9,6 @@ import { Container, Draggable } from "react-smooth-dnd";
 import { useState, useEffect } from "react";
 import FooterColumn from "../FooterColumn/FooterColumn";
 import ModalCoreUI from "../../components/Common/ModalCoreUI";
-import {
-  CButton,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
-  CFormInput,
-  CForm,
-  CCol,
-  CFormCheck,
-  CFormFeedback,
-  CFormTextarea,
-  CFormLabel,
-} from "@coreui/react";
 
 function Column(props) {
   const [visible, setVisible] = useState(false);
@@ -55,39 +40,29 @@ function Column(props) {
     onColumnUpdate(newColumn);
   };
 
-  const onHandleAddNewTask = (newTask) => {
-    console.log(newTask);
+  const onRemoveTask = (taskId) => {
+    let newTasks = [...tasks];
+    let indexRemoveTask = newTasks.findIndex((item) => item.id === taskId);
+    newTasks.splice(indexRemoveTask, 1);
+    column.tasks = newTasks;
+    onColumnUpdate(column);
+  };
 
+  const onUpdateTask = (newTask) => {
+    let newTasks = [...tasks];
+    let indexRemoveTask = newTasks.findIndex((item) => item.id === newTask.id);
+    newTasks.splice(indexRemoveTask, 1, newTask);
+    column.tasks = newTasks;
+    onColumnUpdate(column);
+  };
+
+  const onHandleAddNewTask = (newTask) => {
     let newTasks = [...column.tasks];
     newTasks.push(newTask);
     column.tasks = newTasks;
     onColumnUpdate(column);
     setVisible(false);
-
-    //let newTaskId = newTask.id;
-    // let newColumn = [...column];
-    // newColumn.push(newTask);
-    // console.log("newColumn", column);
   };
-
-  //
-  // const [visible, setVisible] = useState(false);
-  // const handleAddNewTask = (titleNewTask, desciptionNewTask, selected) => {
-  //   if (titleNewTask && desciptionNewTask && selected) {
-  //     // let newTask = {
-  //     //   id: Math.random().toString(36).substring(2, 5),
-  //     //   boardId: "board-1",
-  //     //   columnId: column.id,
-  //     //   title: titleNewTask,
-  //     //   description: desciptionNewTask,
-  //     //   cover: null,
-  //     //   priority: "low",
-  //     //   approve: selected,
-  //     // };
-  //     // onHandleAddNewTask(newTask);
-  //     console.log("newtask", newTask);
-  //   }
-  // };
 
   return (
     <div className="column">
@@ -128,7 +103,12 @@ function Column(props) {
         >
           {tasks.map((task, index) => (
             <Draggable key={index}>
-              <Task task={task} />
+              <Task
+                task={task}
+                onRemoveTask={onRemoveTask}
+                column={column}
+                onUpdateTask={onUpdateTask}
+              />
             </Draggable>
           ))}
         </Container>

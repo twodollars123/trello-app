@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   CButton,
   CModal,
@@ -17,6 +15,7 @@ import {
 } from "@coreui/react";
 
 import Select from "react-select";
+import { useState } from "react";
 
 const options = [
   { label: "Tuấn", value: "Tuấn" },
@@ -30,31 +29,22 @@ const priorityOptions = [
   { label: "medium", value: "medium" },
   { label: "high", value: "high" },
 ];
-function ModalCoreUI(props) {
-  const { visible, setVisible, column } = props;
-  const [approve, setAppprove] = useState([]);
-  const [titleNewTask, setTitleNewTask] = useState();
-  const [desciptionNewTask, setDesciptionNewTask] = useState();
-  const [priority, setPriority] = useState();
+function ModalUpdateTask(props) {
+  const {
+    visible,
+    setVisible,
+    title,
+    description,
+    approve,
+    priority,
+    onUpdateTask,
+  } = props;
+  const [curentApprove, setAppprove] = useState([approve]);
+  const [titleNewTask, setTitleNewTask] = useState(title);
+  const [desciptionNewTask, setDesciptionNewTask] = useState(description);
+  const [curentPriority, setPriority] = useState(priority);
 
-  const handleAddNewTask = () => {
-    let newTask = {
-      id: Math.random().toString(36).substring(2, 5),
-      boardId: column.boardId,
-      columnId: column.id,
-      title: titleNewTask,
-      description: desciptionNewTask,
-      cover: null,
-      priority: priority,
-      approve: approve,
-    };
-    //console.log("newTask", newTask);
-    props.onHandleAddNewTask(newTask);
-  };
-
-  const handleChange = (value, action) => {
-    console.log("action", action);
-    console.log("value", value);
+  const handleChange = (value) => {
     let customValue = [];
     value.map((item) => {
       customValue.push(item.value);
@@ -66,10 +56,25 @@ function ModalCoreUI(props) {
     setPriority(value.value);
   };
 
+  const handleConfirmUpdate = () => {
+    let newTask = {
+      id: Math.random().toString(36).substring(2, 5),
+      boardId: props.column.boardId,
+      columnId: props.column.id,
+      title: titleNewTask,
+      description: desciptionNewTask,
+      cover: null,
+      priority: curentPriority,
+      approve: curentApprove,
+    };
+    onUpdateTask(newTask);
+    setVisible(false);
+  };
+
   return (
     <CModal visible={visible} onClose={() => setVisible(false)}>
       <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle>Add a new task in </CModalTitle>
+        <CModalTitle>Update a new task in </CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3 needs-validation" noValidate>
@@ -79,6 +84,7 @@ function ModalCoreUI(props) {
               feedbackValid="Looks good!"
               id="validationCustom01"
               label="Title"
+              value={titleNewTask}
               required
               onChange={(e) => {
                 setTitleNewTask(e.target.value);
@@ -89,6 +95,7 @@ function ModalCoreUI(props) {
             <CFormTextarea
               id="exampleFormControlTextarea1"
               label="Description"
+              value={desciptionNewTask}
               rows="3"
               text="Must be 8-20 words long."
               onChange={(e) => {
@@ -102,6 +109,9 @@ function ModalCoreUI(props) {
             <Select
               options={priorityOptions}
               closeMenuOnSelect={true}
+              defaultValue={priorityOptions.find(
+                (item) => item.value === priority
+              )}
               onChange={handleChangePriority}
             />
           </CCol>
@@ -113,6 +123,7 @@ function ModalCoreUI(props) {
               isMulti
               closeMenuOnSelect={false}
               onChange={handleChange}
+              defaultValue={options.find((item) => item.value === approve)}
             />
           </CCol>
 
@@ -138,12 +149,12 @@ function ModalCoreUI(props) {
         >
           Close
         </CButton>
-        <CButton color="primary" onClick={handleAddNewTask}>
-          Add
+        <CButton color="primary" onClick={handleConfirmUpdate}>
+          Confirm
         </CButton>
       </CModalFooter>
     </CModal>
   );
 }
 
-export default ModalCoreUI;
+export default ModalUpdateTask;

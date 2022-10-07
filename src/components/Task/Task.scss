@@ -8,6 +8,7 @@
   border-radius: $radius;
   box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.5);
   margin-bottom: $gap;
+
   &:not(:last-child) {
     margin-bottom: $gap;
   }
@@ -34,6 +35,24 @@
     .priority-high {
       color: $high;
       text-shadow: 0 1px 3px rgba($high, 0.5);
+    }
+  }
+
+  .actionTask {
+    display: flex;
+    margin-left: 80%;
+    opacity: 0;
+    transition: 0.2s;
+    &:hover {
+      opacity: 100%;
+    }
+    i {
+      padding: 4px;
+      margin-right: 8px;
+      border-radius: 4px;
+      &:hover {
+        background-color: $scoll-bg-color;
+      }
     }
   }
 }
