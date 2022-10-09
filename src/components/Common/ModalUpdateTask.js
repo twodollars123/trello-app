@@ -58,7 +58,7 @@ function ModalUpdateTask(props) {
 
   const handleConfirmUpdate = () => {
     let newTask = {
-      id: Math.random().toString(36).substring(2, 5),
+      id: props.task.id,
       boardId: props.column.boardId,
       columnId: props.column.id,
       title: titleNewTask,
@@ -67,6 +67,7 @@ function ModalUpdateTask(props) {
       priority: curentPriority,
       approve: curentApprove,
     };
+    console.log("approve", newTask.approve);
     onUpdateTask(newTask);
     setVisible(false);
   };

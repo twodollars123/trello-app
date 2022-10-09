@@ -49,8 +49,11 @@ function Column(props) {
   };
 
   const onUpdateTask = (newTask) => {
+    console.log("newTask", newTask);
     let newTasks = [...tasks];
+    console.log("newTasks", newTasks);
     let indexRemoveTask = newTasks.findIndex((item) => item.id === newTask.id);
+    console.log("indexRemoveTask", indexRemoveTask);
     newTasks.splice(indexRemoveTask, 1, newTask);
     column.tasks = newTasks;
     onColumnUpdate(column);

@@ -1,7 +1,8 @@
 import "./Task.scss";
 
 import { useState } from "react";
-import ModalUpdateTask from "../Common/ModalUpdateTask";
+// import ModalUpdateTask from "../Common/ModalUpdateTask";
+import ModalCoreUI from "../Common/ModalCoreUI";
 
 function Task(props) {
   const { task, onRemoveTask, onUpdateTask } = props;
@@ -37,7 +38,7 @@ function Task(props) {
           <i className="fa fa-pencil " onClick={handleUpdateTask} />
         </div>
       </div>
-      <ModalUpdateTask
+      {/* <ModalUpdateTask
         visible={visible}
         setVisible={setVisible}
         title={task.title}
@@ -46,6 +47,19 @@ function Task(props) {
         priority={task.priority}
         column={props.column}
         onUpdateTask={onUpdateTask}
+        task={task}
+      /> */}
+      <ModalCoreUI
+        visible={visible}
+        setVisible={setVisible}
+        title={task.title}
+        description={task.description}
+        approve={task.approve}
+        priority={task.priority}
+        column={props.column}
+        onUpdateTask={onUpdateTask}
+        task={task}
+        onAction="_comfirmUpdateTask"
       />
     </div>
   );

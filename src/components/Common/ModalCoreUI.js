@@ -31,11 +31,21 @@ const priorityOptions = [
   { label: "high", value: "high" },
 ];
 function ModalCoreUI(props) {
-  const { visible, setVisible, column } = props;
-  const [approve, setAppprove] = useState([]);
-  const [titleNewTask, setTitleNewTask] = useState();
-  const [desciptionNewTask, setDesciptionNewTask] = useState();
-  const [priority, setPriority] = useState();
+  const {
+    visible,
+    setVisible,
+    column,
+    title,
+    description,
+    approve,
+    priority,
+    onUpdateTask,
+    onAction,
+  } = props;
+  const [curentApprove, setAppprove] = useState([approve] || []);
+  const [titleNewTask, setTitleNewTask] = useState(title || "");
+  const [desciptionNewTask, setDesciptionNewTask] = useState(description || "");
+  const [curentPriority, setPriority] = useState(priority || "");
 
   const handleAddNewTask = () => {
     let newTask = {
@@ -53,8 +63,6 @@ function ModalCoreUI(props) {
   };
 
   const handleChange = (value, action) => {
-    console.log("action", action);
-    console.log("value", value);
     let customValue = [];
     value.map((item) => {
       customValue.push(item.value);
@@ -66,10 +74,30 @@ function ModalCoreUI(props) {
     setPriority(value.value);
   };
 
+  const handleConfirmUpdate = () => {
+    let newTask = {
+      id: props.task.id,
+      boardId: props.column.boardId,
+      columnId: props.column.id,
+      title: titleNewTask,
+      description: desciptionNewTask,
+      cover: null,
+      priority: curentPriority,
+      approve: curentApprove,
+    };
+    console.log("approve", newTask.id);
+    onUpdateTask(newTask);
+    setVisible(false);
+  };
+
   return (
     <CModal visible={visible} onClose={() => setVisible(false)}>
       <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle>Add a new task in </CModalTitle>
+        {onAction !== "_comfirmUpdateTask" ? (
+          <CModalTitle>Add a new task in {column.title}</CModalTitle>
+        ) : (
+          <CModalTitle>Update task in {column.title}</CModalTitle>
+        )}
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3 needs-validation" noValidate>
@@ -79,6 +107,7 @@ function ModalCoreUI(props) {
               feedbackValid="Looks good!"
               id="validationCustom01"
               label="Title"
+              value={titleNewTask}
               required
               onChange={(e) => {
                 setTitleNewTask(e.target.value);
@@ -89,6 +118,7 @@ function ModalCoreUI(props) {
             <CFormTextarea
               id="exampleFormControlTextarea1"
               label="Description"
+              value={desciptionNewTask}
               rows="3"
               text="Must be 8-20 words long."
               onChange={(e) => {
@@ -102,6 +132,9 @@ function ModalCoreUI(props) {
             <Select
               options={priorityOptions}
               closeMenuOnSelect={true}
+              defaultValue={priorityOptions.find(
+                (item) => item.value === priority
+              )}
               onChange={handleChangePriority}
             />
           </CCol>
@@ -113,6 +146,7 @@ function ModalCoreUI(props) {
               isMulti
               closeMenuOnSelect={false}
               onChange={handleChange}
+              defaultValue={options.find((item) => item.value === approve)}
             />
           </CCol>
 
@@ -138,9 +172,15 @@ function ModalCoreUI(props) {
         >
           Close
         </CButton>
-        <CButton color="primary" onClick={handleAddNewTask}>
-          Add
-        </CButton>
+        {onAction !== "_comfirmUpdateTask" ? (
+          <CButton color="primary" onClick={handleAddNewTask}>
+            Add
+          </CButton>
+        ) : (
+          <CButton color="primary" onClick={handleConfirmUpdate}>
+            Confirm
+          </CButton>
+        )}
       </CModalFooter>
     </CModal>
   );
